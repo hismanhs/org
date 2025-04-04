@@ -1,0 +1,80 @@
+{
+  "name": "cart",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/cart/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/rspack:rspack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "apps/cart/dist",
+        "index": "apps/cart/src/index.html",
+        "baseHref": "/",
+        "main": "apps/cart/src/main.ts",
+        "tsConfig": "apps/cart/tsconfig.app.json",
+        "assets": ["apps/cart/src/favicon.ico", "apps/cart/src/assets"],
+        "rspackConfig": "apps/cart/rspack.config.ts",
+        "styles": ["apps/cart/src/styles.tailwind"],
+        "scripts": [],
+        "configurations": {
+          "development": {
+            "mode": "development"
+          },
+          "production": {
+            "mode": "production",
+            "optimization": true,
+            "sourceMap": false,
+            "outputHashing": "all",
+            "namedChunks": false,
+            "extractLicenses": true,
+            "vendorChunk": false
+          }
+        },
+        "target": "web"
+      },
+      "configurations": {
+        "production": {
+          "rspackConfig": "apps/cart/rspack.config.prod.ts"
+        }
+      },
+      "dependsOn": ["^build", "typecheck"]
+    },
+    "serve": {
+      "executor": "@nx/rspack:module-federation-dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "cart:build",
+        "hmr": true,
+        "port": 4202
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "cart:build:development"
+        },
+        "production": {
+          "buildTarget": "cart:build:production",
+          "hmr": false
+        }
+      },
+      "dependsOn": ["typecheck"]
+    },
+    "serve-static": {
+      "executor": "@nx/rspack:module-federation-static-server",
+      "defaultConfiguration": "production",
+      "options": {
+        "serveTarget": "cart:serve"
+      },
+      "configurations": {
+        "development": {
+          "serveTarget": "cart:serve:development"
+        },
+        "production": {
+          "serveTarget": "cart:serve:production"
+        }
+      }
+    }
+  }
+}

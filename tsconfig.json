@@ -1,0 +1,31 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compileOnSave": false,
+  "files": [],
+  "references": [
+    {
+      "path": "./apps/graphite-e2e"
+    },
+    {
+      "path": "./apps/graphite"
+    },
+    {
+      "path": "./apps/shell-e2e"
+    },
+    {
+      "path": "./apps/shell"
+    },
+    {
+      "path": "./apps/shop-e2e"
+    },
+    {
+      "path": "./apps/shop"
+    },
+    {
+      "path": "./apps/cart-e2e"
+    },
+    {
+      "path": "./apps/cart"
+    }
+  ]
+}
